@@ -7,8 +7,14 @@
   padding: 30px 30px;
   background-color: #e7e7e7;
 
-  @media (min-width: 0) and (max-width: 499px) {
+  @media (min-width: 500px) and (max-width: 899px) {
+    max-width: 600px;
+    justify-content: center;
+  }
+
+  @media (min-width: 0px) and (max-width: 499px) {
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
 }
