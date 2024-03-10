@@ -3,6 +3,7 @@ import { PhotoData } from "../types";
 export const fetchingData = async (
   setListOfImgs: (array: PhotoData[]) => void,
   setFetching: (value: boolean) => void,
+  setNextPage: (value: boolean) => void,
   listOfImgs: PhotoData[],
   currentPage: number
 ) => {
@@ -22,6 +23,7 @@ export const fetchingData = async (
         "pixel_stream",
         JSON.stringify([...listOfImgs, ...data.photos])
       );
+      setNextPage(!!data.next_page);
     } finally {
       setFetching(false);
     }

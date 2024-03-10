@@ -8,6 +8,7 @@ const List = () => {
   const [listOfImgs, setListOfImgs] = useState<PhotoData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [fetching, setFetching] = useState<boolean>(false);
+  const [isNextPage, setNextPage] = useState<boolean>(true);
 
   useEffect(() => {
     if (localStorage.getItem("pixel_stream")) {
@@ -18,14 +19,26 @@ const List = () => {
       }
       return;
     } else {
-      fetchingData(setListOfImgs, setFetching, listOfImgs, currentPage);
+      fetchingData(
+        setListOfImgs,
+        setFetching,
+        setNextPage,
+        listOfImgs,
+        currentPage
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (fetching) {
-      fetchingData(setListOfImgs, setFetching, listOfImgs, currentPage);
+    if (fetching && isNextPage) {
+      fetchingData(
+        setListOfImgs,
+        setFetching,
+        setNextPage,
+        listOfImgs,
+        currentPage
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetching]);
@@ -36,14 +49,16 @@ const List = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleScroll = (e: Event) => {
     const target = e.target as Document;
     if (
+      isNextPage &&
       target.documentElement.scrollHeight -
         (target.documentElement.scrollTop + window.innerHeight) <
-      100
+        100
     ) {
       setFetching(true);
       setCurrentPage((prevPage) => prevPage + 1);
