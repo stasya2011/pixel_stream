@@ -1,4 +1,5 @@
 import Button from "../Button";
+import Title from "../Title";
 import styles from "./blurComponent.module.scss";
 
 const BlurComponent = ({
@@ -10,8 +11,9 @@ const BlurComponent = ({
 }) => {
   return (
     <div className={styles["wrapper"]}>
-      <h2>{title ? title : "No title"}</h2>
-      <h2>{author}</h2>
+      <Title style={{ fontWeight: "800" }}>{title ? title : "No title"}</Title>
+      <div style={{ border: "1px solid white", width: 80 }} />
+      <Title style={{ fontStyle: "italic" }}>{author}</Title>
       <Button onClick={() => console.log("click")}>Favourite</Button>
     </div>
   );
